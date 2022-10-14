@@ -1,6 +1,7 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/inertia-vue3";
 </script>
 
 <template>
@@ -14,13 +15,19 @@ import { Head } from '@inertiajs/inertia-vue3';
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        You're logged in!
-                    </div>
-                </div>
-            </div>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"></div>
+        </div>
+        <div class="mb-4">
+            <Link
+                class="px-6 py-2 mb-2 text-green-100 bg-green-500 rounded"
+                :href="route('categories.index')"
+                >Categories</Link
+            >
+            <Link
+                class="px-6 py-2 mb-2 text-green-100 bg-green-500 rounded"
+                :href="route('courses.index')"
+                >Courses</Link
+            >
         </div>
     </AuthenticatedLayout>
 </template>
