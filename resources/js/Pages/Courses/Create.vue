@@ -1,20 +1,18 @@
 <script setup>
-import { useForm, Head } from "@inertiajs/inertia-vue3";
+import { useForm, Head, usePage } from "@inertiajs/inertia-vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { computed } from "vue";
 
-const form = useForm({
+const form = useForm("Courses/Create", {
     name: "",
     duration: "",
+    category_id: "",
 });
 const submit = () => {
-    form.post(route("courses.store"), {
-        preserveState: true,
-    });
+    form.post(route("courses.store"), { onSuccess: () => form.reset() });
 };
 
-const layout = () => {
-    layout: AuthenticatedLayout;
-};
+const categories = computed(() => usePage().props.value.categories);
 </script>
 
 <template>
@@ -26,6 +24,9 @@ const layout = () => {
                 Course Create
             </h2>
         </template>
+        <div v-if="$page.props.flash.message" class="alert">
+            {{ $page.props.flash.message }}
+        </div>
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
@@ -47,7 +48,7 @@ const layout = () => {
                                 </div>
                             </div>
                             <div>
-                                <label for="name">Course duration:</label>
+                                <label for="name">Course duration: </label>
                                 <input
                                     name="name"
                                     type="text"
@@ -61,7 +62,31 @@ const layout = () => {
                                     {{ form.errors.duration }}
                                 </div>
                             </div>
-                            <div class="flex items-center mt-4">
+                            <div>
+                                <label for="name">Category:</label>
+                                <select
+                                    v-model="form.category_id"
+                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                >
+                                    <option
+                                        v-for="category in categories"
+                                        :value="category.id"
+                                        :key="category.id"
+                                    >
+                                        {{ category.name }}
+                                    </option>
+                                </select>
+                                <div
+                                    class="text-sm text-red-600"
+                                    v-if="form.errors.duration"
+                                >
+                                    {{ form.errors.duration }}
+                                </div>
+                            </div>
+                            <div
+                                v-if="form.isDirty"
+                                class="flex items-center mt-4"
+                            >
                                 <button
                                     type="submit"
                                     :disabled="form.processing"

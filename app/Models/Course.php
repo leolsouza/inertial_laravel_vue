@@ -13,7 +13,7 @@ class Course extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'course_category');
     }
 
     public function user()

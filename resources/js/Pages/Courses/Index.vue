@@ -23,6 +23,7 @@ function destroy(id) {
                         <Link
                             class="px-6 py-2 mb-2 text-green-100 bg-green-500 rounded"
                             :href="route('courses.create')"
+                            preserve-scroll
                         >
                             Courses Create
                         </Link>
@@ -32,13 +33,23 @@ function destroy(id) {
                             <td class="px-4 py-2">ID</td>
                             <td class="px-4 py-2">Name</td>
                             <td class="px-4 py-2">Duration</td>
+                            <td class="px-4 py-2">Category</td>
                         </thead>
                         <tbody>
-                            <tr v-for="course in courses" :key="course.id">
+                            <tr v-for="course in courses.data" :key="course.id">
                                 <td class="px-4 py-2">{{ course.id }}</td>
                                 <td class="px-4 py-2">{{ course.name }}</td>
                                 <td class="px-4 py-2">
                                     {{ course.duration }}
+                                </td>
+                                <td
+                                    class="px-4 py-2"
+                                    v-for="categories in course.categories"
+                                    :key="categories.id"
+                                >
+                                    <div class="bg-gray-300">
+                                        {{ categories.name }}
+                                    </div>
                                 </td>
 
                                 <td class="px-4 py-2 font-extrabold">

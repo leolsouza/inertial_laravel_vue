@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->unsigned();
             $table->foreignId('category_id')->unsigned();
-            $table->timestamps();
         });
     }
 

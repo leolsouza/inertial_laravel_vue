@@ -17,7 +17,8 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->name(),
+            'duration' => '1 ano'
         ];
     }
 }

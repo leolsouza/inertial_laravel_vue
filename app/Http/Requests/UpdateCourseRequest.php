@@ -25,7 +25,8 @@ class UpdateCourseRequest extends FormRequest
     {
         return [
             'name' => ['string'],
-            'duration' => ['string']
+            'duration' => ['numeric'],
+            'category_id' => ['id']
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use App\Models\Category;
 use App\Models\Course;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -17,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
+        $courses = Course::with('categories')->paginate(8);
 
         return Inertia::render('Courses/Index', ['courses' => $courses]);
     }
@@ -29,7 +30,9 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Courses/Create');
+        $categories = Category::all();
+
+        return Inertia::render('Courses/Create', ['categories' => $categories]);
     }
 
     /**
@@ -40,9 +43,11 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        Course::create($request->validated());
+        $course = Course::create($request->except('category_id'));
 
-        return Redirect::route('courses.index');
+        $course->categories()->attach($request->category_id);
+
+        return redirect()->back()->with('message', 'Your Course has been created successfully');
     }
 
     /**
@@ -64,7 +69,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return Inertia::render('Courses/Edit', ['course' => $course]);
+        $categories = Category::all();
+        return Inertia::render('Courses/Edit', ['course' => $course, 'categories' => $categories]);
     }
 
     /**
