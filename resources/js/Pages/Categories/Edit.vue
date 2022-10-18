@@ -1,7 +1,8 @@
 <script setup>
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { computed } from "vue";
+import InputForm from "@/Components/Form/InputForm.vue";
+import ErrorForm from "@/Components/Form/ErrorForm.vue";
 
 const categories = usePage().props.value.category;
 
@@ -29,11 +30,8 @@ const submit = () => {
                         <form @submit.prevent="submit">
                             <div>
                                 <label for="name">Category name:</label>
-                                <input
-                                    type="text"
-                                    v-model="form.name"
-                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                />
+                                <InputForm v-model="form.name" />
+                                <ErrorForm :error="form.errors.name" />
                             </div>
 
                             <div class="flex items-center mt-4">

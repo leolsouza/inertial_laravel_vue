@@ -18,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::with('categories')->paginate(8);
+        $courses = Course::with('categories')->paginate(15);
 
         return Inertia::render('Courses/Index', ['courses' => $courses]);
     }
@@ -95,6 +95,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        $course->categories()->detach();
         $course->delete();
 
         return redirect()->route('courses.index');

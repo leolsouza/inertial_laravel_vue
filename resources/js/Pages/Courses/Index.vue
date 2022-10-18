@@ -2,6 +2,7 @@
 import { Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { computed } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const courses = computed(() => usePage().props.value.courses);
 
@@ -68,6 +69,7 @@ function destroy(id) {
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination :links="courses.links" class="mt-6" />
                 </div>
             </div>
         </div>

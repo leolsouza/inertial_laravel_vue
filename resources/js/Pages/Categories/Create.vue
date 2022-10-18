@@ -1,6 +1,8 @@
 <script setup>
 import { useForm } from "@inertiajs/inertia-vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import InputForm from "@/Components/Form/InputForm.vue";
+import ErrorForm from "@/Components/Form/ErrorForm.vue";
 
 const form = useForm({
     name: "",
@@ -25,18 +27,8 @@ const submit = () => {
                         <form @submit.prevent="submit">
                             <div>
                                 <label for="name">Category name:</label>
-                                <input
-                                    name="name"
-                                    type="text"
-                                    v-model="form.name"
-                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                />
-                                <div
-                                    class="text-sm text-red-600"
-                                    v-if="form.errors.name"
-                                >
-                                    {{ form.errors.name }}
-                                </div>
+                                <InputForm v-model="form.name" />
+                                <ErrorForm :error="form.errors.name" />
                             </div>
                             <div class="flex items-center mt-4">
                                 <button
