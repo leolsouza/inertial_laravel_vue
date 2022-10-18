@@ -82,9 +82,11 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        $course->update($request->validated());
+        $course->update($request->except('category_id'));
 
-        return redirect()->route('courses.index');
+        $course->categories()->attach($request->category_id);
+
+        return redirect()->back()->with('message', 'Your Course has been updated successfully');
     }
 
     /**

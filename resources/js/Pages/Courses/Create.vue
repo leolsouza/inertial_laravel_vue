@@ -4,6 +4,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { computed } from "vue";
 import InputForm from "@/Components/Form/InputForm.vue";
 import ErrorForm from "@/Components/Form/ErrorForm.vue";
+import CreateEditLayout from "../../Layouts/Form/CreateEditLayout.vue";
 
 const form = useForm("Courses/Create", {
     name: "",
@@ -26,58 +27,51 @@ const categories = computed(() => usePage().props.value.categories);
                 Course Create
             </h2>
         </template>
-        <div v-if="$page.props.flash.message" class="alert">
-            {{ $page.props.flash.message }}
-        </div>
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        <form @submit.prevent="submit">
-                            <div>
-                                <label for="name">Course name: </label>
-                                <InputForm v-model="form.name" />
-                                <ErrorForm :error="form.errors.name" />
-                            </div>
-
-                            <div>
-                                <label for="name">Course duration: </label>
-                                <InputForm v-model="form.duration" />
-                                <ErrorForm :error="form.errors.duration" />
-                            </div>
-                            <div>
-                                <label for="name">Category:</label>
-                                <select
-                                    v-model="form.category_id"
-                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                >
-                                    <option
-                                        v-for="category in categories"
-                                        :value="category.id"
-                                        :key="category.id"
-                                    >
-                                        {{ category.name }}
-                                    </option>
-                                </select>
-                                <ErrorForm :error="form.errors.category_id" />
-                            </div>
-                            <div
-                                v-if="form.isDirty"
-                                class="flex items-center mt-4"
-                            >
-                                <button
-                                    type="submit"
-                                    :disabled="form.processing"
-                                    class="px-6 py-2 text-white bg-gray-900 rounded"
-                                    :class="{ 'opacity-25': form.processing }"
-                                >
-                                    Save
-                                </button>
-                            </div>
-                        </form>
+        <CreateEditLayout>
+            <template #flash :flash="$page.props.flash.message">
+                {{ $page.props.flash.message }}
+            </template>
+            <template #form>
+                <form @submit.prevent="submit">
+                    <div>
+                        <label for="name">Course name: </label>
+                        <InputForm v-model="form.name" />
+                        <ErrorForm :error="form.errors.name" />
                     </div>
-                </div>
-            </div>
-        </div>
+
+                    <div>
+                        <label for="name">Course duration: </label>
+                        <InputForm v-model="form.duration" />
+                        <ErrorForm :error="form.errors.duration" />
+                    </div>
+                    <div>
+                        <label for="name">Category:</label>
+                        <select
+                            v-model="form.category_id"
+                            class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                        >
+                            <option
+                                v-for="category in categories"
+                                :value="category.id"
+                                :key="category.id"
+                            >
+                                {{ category.name }}
+                            </option>
+                        </select>
+                        <ErrorForm :error="form.errors.category_id" />
+                    </div>
+                    <div v-if="form.isDirty" class="flex items-center mt-4">
+                        <button
+                            type="submit"
+                            :disabled="form.processing"
+                            class="px-6 py-2 text-white bg-gray-900 rounded"
+                            :class="{ 'opacity-25': form.processing }"
+                        >
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </template>
+        </CreateEditLayout>
     </AuthenticatedLayout>
 </template>

@@ -37,7 +37,7 @@ class CategoryController extends Controller
     {
         Category::create($request->validated());
 
-        return Redirect::route('categories.index');
+        return redirect()->back()->with('message', 'Your Category has been created successfully');
     }
 
 
@@ -74,7 +74,7 @@ class CategoryController extends Controller
     {
         $category->update($request->validated());
 
-        return redirect()->route('categories.index');
+        return redirect()->back()->with('message', 'Your Category has been updated successfully');
     }
 
     /**
