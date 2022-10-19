@@ -21,10 +21,8 @@ const submit = () => {
                 Category Create
             </h2>
         </template>
-        <CreateEditLayout>
-            <template #flash :flash="$page.props.flash.message"
-                >{{ $page.props.flash.message }}
-            </template>
+        <CreateEditLayout :flash="$page.props.flash.message">
+            <template #flash>{{ $page.props.flash?.message }}</template>
             <template #form>
                 <form @submit.prevent="submit">
                     <div>

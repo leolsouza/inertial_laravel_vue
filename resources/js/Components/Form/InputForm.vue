@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({ modelValue: String });
+const props = defineProps({ modelValue: [String, Number] });
 
 const $emit = defineEmits();
 </script>

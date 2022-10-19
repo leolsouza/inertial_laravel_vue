@@ -9,7 +9,7 @@ import CreateEditLayout from "../../Layouts/Form/CreateEditLayout.vue";
 const form = useForm("Courses/Create", {
     name: "",
     duration: "",
-    category_id: "",
+    categories_id: [],
 });
 const submit = () => {
     form.post(route("courses.store"), { onSuccess: () => form.reset() });
@@ -27,9 +27,9 @@ const categories = computed(() => usePage().props.value.categories);
                 Course Create
             </h2>
         </template>
-        <CreateEditLayout>
-            <template #flash :flash="$page.props.flash.message">
-                {{ $page.props.flash.message }}
+        <CreateEditLayout :flash="$page.props.flash.message">
+            <template #flash>
+                {{ $page.props.flash?.message }}
             </template>
             <template #form>
                 <form @submit.prevent="submit">
@@ -44,22 +44,27 @@ const categories = computed(() => usePage().props.value.categories);
                         <InputForm v-model="form.duration" />
                         <ErrorForm :error="form.errors.duration" />
                     </div>
+
                     <div>
-                        <label for="name">Category:</label>
-                        <select
-                            v-model="form.category_id"
-                            class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                        >
-                            <option
-                                v-for="category in categories"
+                        <label for="name">Categories:</label>
+                        <div v-for="category in categories" :key="category.id">
+                            <input
+                                type="checkbox"
                                 :value="category.id"
-                                :key="category.id"
-                            >
-                                {{ category.name }}
-                            </option>
-                        </select>
-                        <ErrorForm :error="form.errors.category_id" />
+                                v-model="form.categories_id"
+                            />
+                            <label for="name" class="ml-2">{{
+                                category.name
+                            }}</label>
+                        </div>
+                        <div
+                            class="text-sm text-red-600"
+                            v-if="form.errors.categories_id"
+                        >
+                            {{ form.errors.categories_id }}
+                        </div>
                     </div>
+
                     <div v-if="form.isDirty" class="flex items-center mt-4">
                         <button
                             type="submit"

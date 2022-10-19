@@ -6,7 +6,6 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Category;
 use App\Models\Course;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CourseController extends Controller
@@ -18,7 +17,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::with('categories')->paginate(15);
+        $courses = Course::with('categories')->paginate(5);
 
         return Inertia::render('Courses/Index', ['courses' => $courses]);
     }
@@ -30,7 +29,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::all('id', 'name');
 
         return Inertia::render('Courses/Create', ['categories' => $categories]);
     }
@@ -43,9 +42,8 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        $course = Course::create($request->except('category_id'));
-
-        $course->categories()->attach($request->category_id);
+        $course = Course::create($request->except('categories_id'));
+        $course->categories()->attach($request->categories_id);
 
         return redirect()->back()->with('message', 'Your Course has been created successfully');
     }
@@ -69,8 +67,9 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        $categories = Category::all();
-        return Inertia::render('Courses/Edit', ['course' => $course, 'categories' => $categories]);
+        $categories = Category::all('id', 'name');
+
+        return Inertia::render('Courses/Edit', ['course' => $course->load('categories'), 'categories' => $categories]);
     }
 
     /**
@@ -82,9 +81,8 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        $course->update($request->except('category_id'));
-
-        $course->categories()->attach($request->category_id);
+        $course->update($request->except('categories_id'));
+        $course->categories()->sync($request->categories_id);
 
         return redirect()->back()->with('message', 'Your Course has been updated successfully');
     }

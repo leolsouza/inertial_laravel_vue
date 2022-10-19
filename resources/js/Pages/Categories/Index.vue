@@ -26,7 +26,7 @@ function destroy(id) {
                     Category Create
                 </Link>
             </div>
-            <table>
+            <table class="table-auto">
                 <thead class="font-bold bg-gray-300 border-b-2">
                     <td class="px-4 py-2">ID</td>
                     <td class="px-4 py-2">Name</td>

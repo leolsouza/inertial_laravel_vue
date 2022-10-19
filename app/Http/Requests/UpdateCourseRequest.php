@@ -24,9 +24,9 @@ class UpdateCourseRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['string'],
-            'duration' => ['numeric'],
-            'category_id' => ['id']
+            'name' => ['required', 'string'],
+            'duration' => ['required', 'numeric'],
+            'category_id' => ['required', 'exists:categories,id']
         ];
     }
 }

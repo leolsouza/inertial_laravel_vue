@@ -28,31 +28,35 @@ function destroy(id) {
                     Courses Create
                 </Link>
             </div>
-            <table>
+            <table class="table-auto">
                 <thead class="font-bold bg-gray-300 border-b-2">
-                    <td class="px-4 py-2">ID</td>
-                    <td class="px-4 py-2">Name</td>
-                    <td class="px-4 py-2">Duration</td>
-                    <td class="px-4 py-2">Category</td>
+                    <tr>
+                        <th class="px-4 py-2">ID</th>
+                        <th class="px-4 py-2">Name</th>
+                        <th class="px-4 py-2">Duration</th>
+                        <th class="px-4 py-2">Category</th>
+                    </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     <tr v-for="course in courses.data" :key="course.id">
-                        <td class="px-4 py-2">{{ course.id }}</td>
-                        <td class="px-4 py-2">{{ course.name }}</td>
-                        <td class="px-4 py-2">
+                        <td class="px-4 py-2 border-b-2">
+                            {{ course.id }}
+                        </td>
+                        <td class="px-4 py-2 border-b-2">
+                            {{ course.name }}
+                        </td>
+                        <td class="px-4 py-2 border-b-2">
                             {{ course.duration }}
                         </td>
                         <td
-                            class="px-4 py-2"
+                            class="px-4 py-2 border-b-2"
                             v-for="categories in course.categories"
                             :key="categories.id"
                         >
-                            <div class="bg-gray-300">
-                                {{ categories.name }}
-                            </div>
+                            {{ categories.name }}
                         </td>
 
-                        <td class="px-4 py-2 font-extrabold">
+                        <td class="px-4 py-2 font-extrabold border-b-2">
                             <Link
                                 class="text-green-700"
                                 :href="route('courses.edit', course.id)"

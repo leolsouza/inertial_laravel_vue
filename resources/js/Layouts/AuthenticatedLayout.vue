@@ -29,12 +29,18 @@ const showingNavigationDropdown = ref(false);
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
-                                <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
-                                >
-                                    Dashboard
-                                </NavLink>
+                                <div class="my-auto">
+                                    <Link
+                                        class="px-6 py-2 mb-2 ml-2 text-green-100 bg-green-500 rounded"
+                                        :href="route('categories.index')"
+                                        >Categories</Link
+                                    >
+                                    <Link
+                                        class="px-6 py-2 mb-2 ml-2 text-green-100 bg-green-500 rounded"
+                                        :href="route('courses.index')"
+                                        >Courses</Link
+                                    >
+                                </div>
                             </div>
                         </div>
 

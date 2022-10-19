@@ -9,9 +9,14 @@ const courses = usePage().props.value.course;
 
 const categories = usePage().props.value.categories;
 
+const categoriesId = courses.categories.map((category) => {
+    return category.id;
+});
+
 const form = useForm({
     name: courses.name,
     duration: courses.duration,
+    categories_id: categoriesId,
 });
 
 const submit = () => {
@@ -43,25 +48,24 @@ const submit = () => {
                         <InputForm v-model="form.duration" />
                         <ErrorForm :error="form.errors.duration" />
                     </div>
+
                     <div>
-                        <label for="name">Category:</label>
-                        <select
-                            v-model="form.category_id"
-                            class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                        >
-                            <option
-                                v-for="category in categories"
+                        <label for="name">Categories:</label>
+                        <div v-for="category in categories" :key="category.id">
+                            <input
+                                type="checkbox"
                                 :value="category.id"
-                                :key="category.id"
-                            >
-                                {{ category.name }}
-                            </option>
-                        </select>
+                                v-model="form.categories_id"
+                            />
+                            <label for="name" class="ml-2">{{
+                                category.name
+                            }}</label>
+                        </div>
                         <div
                             class="text-sm text-red-600"
-                            v-if="form.errors.duration"
+                            v-if="form.errors.categories_id"
                         >
-                            {{ form.errors.duration }}
+                            {{ form.errors.categories_id }}
                         </div>
                     </div>
 

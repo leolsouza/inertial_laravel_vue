@@ -4,9 +4,6 @@ const props = defineProps({ flash: String });
 
 <template>
     <div class="py-5 mx-auto max-w-7xl sm:px-6 lg:px-8 text-orange-700">
-        <div v-if="flash" class="alert">
-            <slot name="flash" />
-        </div>
         <slot name="flash" />
     </div>
     <div class="py-12">

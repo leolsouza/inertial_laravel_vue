@@ -18,7 +18,7 @@ class CourseFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'duration' => 1
+            'duration' => fake()->numberBetween(1, 48)
         ];
     }
 }
