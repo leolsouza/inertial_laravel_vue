@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return Inertia::render('Categories/Index', ['categories' => $categories]);
+        return Inertia::render('Categories/Index', compact('categories'));
     }
 
     /**0
@@ -60,7 +60,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return Inertia::render('Categories/Edit', ['category' => $category]);
+        return Inertia::render('Categories/Edit', compact('category'));
     }
 
     /**

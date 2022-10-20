@@ -48,12 +48,12 @@ function destroy(id) {
                         <td class="px-4 py-2 border-b-2">
                             {{ course.duration }}
                         </td>
-                        <td
-                            class="px-4 py-2 border-b-2"
-                            v-for="categories in course.categories"
-                            :key="categories.id"
-                        >
-                            {{ categories.name }}
+                        <td class="px-4 py-2 border-b-2">
+                            {{
+                                course.categories
+                                    .map(({ name }) => name)
+                                    .join(", ")
+                            }}
                         </td>
 
                         <td class="px-4 py-2 font-extrabold border-b-2">

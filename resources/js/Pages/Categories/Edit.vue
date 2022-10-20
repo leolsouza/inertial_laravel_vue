@@ -24,8 +24,8 @@ const submit = () => {
             </h2>
         </template>
         <CreateEditLayout>
-            <template #flash :flash="$page.props.flash.message">
-                {{ $page.props.flash.message }}
+            <template #flash>
+                {{ $page.props.flash?.message }}
             </template>
 
             <template #form>

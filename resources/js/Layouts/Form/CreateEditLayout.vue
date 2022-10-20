@@ -1,6 +1,4 @@
-<script setup>
-const props = defineProps({ flash: String });
-</script>
+<script setup></script>
 
 <template>
     <div class="py-5 mx-auto max-w-7xl sm:px-6 lg:px-8 text-orange-700">

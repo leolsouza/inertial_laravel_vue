@@ -19,7 +19,7 @@ class CourseController extends Controller
     {
         $courses = Course::with('categories')->paginate(5);
 
-        return Inertia::render('Courses/Index', ['courses' => $courses]);
+        return Inertia::render('Courses/Index', compact('courses'));
     }
 
     /**
@@ -42,8 +42,9 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        $course = Course::create($request->except('categories_id'));
-        $course->categories()->attach($request->categories_id);
+        $data = collect($request->validated())->except('categories_id');
+        $course = Course::create($data->toArray());
+        $course->categories()->attach(request('categories_id'));
 
         return redirect()->back()->with('message', 'Your Course has been created successfully');
     }
@@ -68,8 +69,9 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         $categories = Category::all('id', 'name');
+        $course->load('categories:id');
 
-        return Inertia::render('Courses/Edit', ['course' => $course->load('categories'), 'categories' => $categories]);
+        return inertia('Courses/Edit', compact('course', 'categories'));
     }
 
     /**
@@ -81,7 +83,8 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        $course->update($request->except('categories_id'));
+        $data = collect($request->validated())->except('categories_id');
+        $course->update($data->toArray());
         $course->categories()->sync($request->categories_id);
 
         return redirect()->back()->with('message', 'Your Course has been updated successfully');
@@ -95,7 +98,6 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        $course->categories()->detach();
         $course->delete();
 
         return redirect()->route('courses.index');
